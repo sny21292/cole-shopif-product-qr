@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Install Instruction QR Service · Turn Offroad</title>
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #555555;
+      --line: #d9d9d9;
+      --bg: #f7f6f3;
+      --accent: #c8511c;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #fff;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: -0.01em;
+    }
+    .tagline {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 40px;
+    }
+    h2 {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 40px 0 12px;
+      font-weight: 600;
+    }
+    p { margin: 0 0 14px; }
+    ol { padding-left: 22px; margin: 0 0 14px; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #ececea;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+    }
+    footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .accent { color: var(--accent); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="badge">Status — in development</div>
+    <h1>Install Instruction QR Service</h1>
+    <p class="tagline">Per-product QR codes that the warehouse drops into each Turn Offroad shipping box, so customers can scan and watch the install video instantly.</p>
+
+    <h2>What it does</h2>
+    <p>
+      When the warehouse prints a ShipStation packing slip for an order, this service generates a
+      <span class="accent">scannable QR label per item</span> in that order. Each QR points to the install
+      video specific to that exact product variant. The customer opens the box, scans, and is watching the
+      walkthrough on their phone within seconds.
+    </p>
+
+    <h2>How it works</h2>
+    <ol>
+      <li>Source of truth lives in Shopify — a new variant-level metafield <code>custom.install_video_url</code> holds one URL per variant.</li>
+      <li>This service exposes <code>GET /qr?sku=&lt;sku&gt;</code> — looks up the variant in Shopify, reads the install URL, returns a PNG of the QR code.</li>
+      <li>ShipStation's packing slip template loops over the order's line items and renders <code>&lt;img src=".../qr?sku=[Sku]"&gt;</code> per item — one 4&times;6 page per product, automatic.</li>
+      <li>No 100+ ShipStation templates to maintain. Shopify metafield is the single source of truth.</li>
+    </ol>
+
+    <h2>What's here right now</h2>
+    <p>
+      Just this placeholder page. The QR endpoint, Shopify metafield wiring, and ShipStation template
+      changes land once Cole confirms the variant-level metafield approach and a few open questions
+      (label stock, fallback for SKUs without a video, per-unit vs per-line-item).
+    </p>
+
+    <footer>
+      Turn Offroad · qr.turnoffroad.com · maintained by Sunil
+    </footer>
+  </div>
+</body>
+</html>

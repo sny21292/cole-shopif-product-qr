@@ -1,0 +1,21 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Env
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Claude Code
+.claude/
