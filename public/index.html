@@ -3,112 +3,371 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Install Instruction QR Service · Turn Offroad</title>
+  <title>QR Code Integration · Turn Offroad</title>
   <style>
     :root {
-      --ink: #111111;
-      --muted: #555555;
-      --line: #d9d9d9;
-      --bg: #f7f6f3;
-      --accent: #c8511c;
+      --ink: #1a1a1a;
+      --muted: #616161;
+      --line: #e0e0e0;
+      --bg: #f6f6f7;
+      --card-bg: #ffffff;
+      --accent: #2c6ecb;
+      --green: #008060;
+      --orange: #b98900;
+      --radius: 10px;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      margin: 0;
-      padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--ink);
-      line-height: 1.55;
+      line-height: 1.5;
     }
-    .wrap {
-      max-width: 720px;
+    .container {
+      max-width: 900px;
       margin: 0 auto;
-      padding: 64px 24px 96px;
+      padding: 40px 24px 80px;
     }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: #fff;
-      margin-bottom: 24px;
+
+    /* Header */
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
     }
-    h1 {
-      font-size: 36px;
-      line-height: 1.15;
-      margin: 0 0 12px;
-      letter-spacing: -0.01em;
+    .app-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
     }
-    .tagline {
-      font-size: 18px;
-      color: var(--muted);
-      margin: 0 0 40px;
-    }
-    h2 {
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 40px 0 12px;
+    .app-header h1 {
+      font-size: 22px;
       font-weight: 600;
     }
-    p { margin: 0 0 14px; }
-    ol { padding-left: 22px; margin: 0 0 14px; }
-    li { margin-bottom: 6px; }
-    code {
-      background: #ececea;
-      padding: 1px 6px;
+    .app-header p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-title span { font-size: 14px; }
+
+    /* Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Status */
+    .status-grid {
+      display: flex;
+      gap: 32px;
+    }
+    .status-item label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .status-item .value {
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-green { background: var(--green); }
+    .dot-orange { background: var(--orange); }
+    .badge-idle {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--orange);
       border-radius: 4px;
+      font-size: 12px;
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    /* Quick links */
+    .quick-link {
+      display: block;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      transition: background 0.15s;
+    }
+    .quick-link:hover { background: var(--bg); }
+    .quick-link span { margin-right: 8px; }
+
+    /* Steps */
+    .steps { list-style: none; }
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--bg);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Config */
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .config-item label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .config-item .value {
       font-size: 13px;
       font-family: "SF Mono", Menlo, Consolas, monospace;
+      background: var(--bg);
+      padding: 4px 8px;
+      border-radius: 4px;
     }
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      background: #fdf0d5;
+      color: #6d4c00;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 4px;
+    }
+
+    /* Footer */
     footer {
-      margin-top: 56px;
+      text-align: center;
+      margin-top: 40px;
       padding-top: 20px;
       border-top: 1px solid var(--line);
-      color: var(--muted);
       font-size: 13px;
+      color: var(--muted);
     }
-    .accent { color: var(--accent); font-weight: 600; }
+    footer a { color: #2e7d5b; text-decoration: none; font-weight: 600; }
+    footer a:hover { color: #1b5e40; }
+
+    /* Loading state for dynamic data */
+    .loading { color: var(--muted); font-style: italic; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="badge">Status — in development</div>
-    <h1>Install Instruction QR Service</h1>
-    <p class="tagline">Per-product QR codes that the warehouse drops into each Turn Offroad shipping box, so customers can scan and watch the install video instantly.</p>
+  <div class="container">
+    <!-- Header -->
+    <div class="app-header">
+      <div class="app-icon">QR</div>
+      <div>
+        <h1>QR Code Integration</h1>
+        <p>Per-product install video QR codes for Turn Offroad</p>
+      </div>
+    </div>
 
-    <h2>What it does</h2>
-    <p>
-      When the warehouse prints a ShipStation packing slip for an order, this service generates a
-      <span class="accent">scannable QR label per item</span> in that order. Each QR points to the install
-      video specific to that exact product variant. The customer opens the box, scans, and is watching the
-      walkthrough on their phone within seconds.
-    </p>
+    <div class="grid-2">
+      <!-- System Status -->
+      <div class="card">
+        <div class="card-title"><span>&#9881;</span> SYSTEM STATUS</div>
+        <div class="status-grid">
+          <div class="status-item">
+            <label>Server</label>
+            <div class="status-badge" id="server-status">
+              <span class="dot dot-green"></span> <span class="loading">Checking...</span>
+            </div>
+          </div>
+          <div class="status-item">
+            <label>Uptime</label>
+            <div class="value" id="uptime">--</div>
+          </div>
+          <div class="status-item">
+            <label>Cache</label>
+            <div class="value" id="cache-status"><span class="badge-idle">Active</span></div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; font-size: 12px; color: var(--muted);">
+          Last checked: <span id="last-checked">--</span>
+        </div>
+      </div>
 
-    <h2>How it works</h2>
-    <ol>
-      <li>Source of truth lives in Shopify — a new variant-level metafield <code>custom.install_video_url</code> holds one URL per variant.</li>
-      <li>This service exposes <code>GET /qr?sku=&lt;sku&gt;</code> — looks up the variant in Shopify, reads the install URL, returns a PNG of the QR code.</li>
-      <li>ShipStation's packing slip template loops over the order's line items and renders <code>&lt;img src=".../qr?sku=[Sku]"&gt;</code> per item — one 4&times;6 page per product, automatic.</li>
-      <li>No 100+ ShipStation templates to maintain. Shopify metafield is the single source of truth.</li>
-    </ol>
+      <!-- Quick Links -->
+      <div class="card">
+        <div class="card-title"><span>&#128279;</span> QUICK LINKS</div>
+        <a href="/health" target="_blank" class="quick-link"><span>&#9825;</span> Health Check Endpoint</a>
+        <a href="/cache/clear" class="quick-link" onclick="return confirm('Clear all cache?')"><span>&#9850;</span> Clear Cache</a>
+      </div>
+    </div>
 
-    <h2>What's here right now</h2>
-    <p>
-      Just this placeholder page. The QR endpoint, Shopify metafield wiring, and ShipStation template
-      changes land once Cole confirms the variant-level metafield approach and a few open questions
-      (label stock, fallback for SKUs without a video, per-unit vs per-line-item).
-    </p>
+    <!-- How It Works -->
+    <div class="card">
+      <div class="card-title"><span>&#9881;</span> HOW IT WORKS</div>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Video URL Set in Shopify</div>
+            <div class="step-desc">The <strong>custom.install_video_url</strong> metafield is populated on each product variant via CSV import (Matrixify).</div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Warehouse Prints Packing Slip</div>
+            <div class="step-desc">ShipStation's packing slip template includes <strong>&lt;img src="qr.turnoffroad.com/qr?sku=[Sku]"&gt;</strong> per line item.</div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">QR Generated On-the-fly</div>
+            <div class="step-desc">This service looks up the variant by SKU, reads the install video URL, and returns a <strong>600x600 PNG QR code</strong> with Level H error correction.</div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Customer Scans & Watches</div>
+            <div class="step-desc">Customer opens the box, scans the QR code, and is taken directly to the install video for that specific product.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Configuration -->
+    <div class="card">
+      <div class="card-title"><span>&#9881;</span> CONFIGURATION</div>
+      <div class="config-grid">
+        <div class="config-item">
+          <label>QR Endpoint</label>
+          <div class="value">/qr?sku=&lt;sku&gt;</div>
+        </div>
+        <div class="config-item">
+          <label>Cache TTL</label>
+          <div class="value">15 minutes</div>
+        </div>
+        <div class="config-item">
+          <label>Metafield</label>
+          <div class="value">custom.install_video_url</div>
+        </div>
+        <div class="config-item">
+          <label>Fallback</label>
+          <div class="value">mailto:help@turnoffroad.com</div>
+        </div>
+        <div class="config-item">
+          <label>QR Settings</label>
+          <div>
+            <span class="tag">600x600</span>
+            <span class="tag">Level H</span>
+            <span class="tag">PNG</span>
+          </div>
+        </div>
+        <div class="config-item">
+          <label>Shopify Store</label>
+          <div class="value">turn-offroad.myshopify.com</div>
+        </div>
+      </div>
+    </div>
 
     <footer>
-      Turn Offroad · qr.turnoffroad.com · maintained by Sunil
+      Built by <a href="https://cloveode.com" target="_blank">CloveOde</a>
     </footer>
   </div>
+
+  <script>
+    async function checkStatus() {
+      try {
+        const res = await fetch('/health');
+        const data = await res.json();
+        const statusEl = document.getElementById('server-status');
+        const uptimeEl = document.getElementById('uptime');
+        const checkedEl = document.getElementById('last-checked');
+
+        if (data.ok) {
+          statusEl.innerHTML = '<span class="dot dot-green"></span> Online';
+
+          const secs = Math.floor(data.uptime);
+          const days = Math.floor(secs / 86400);
+          const hrs = Math.floor((secs % 86400) / 3600);
+          const mins = Math.floor((secs % 3600) / 60);
+          uptimeEl.textContent = days + 'd ' + hrs + 'h ' + mins + 'm';
+        } else {
+          statusEl.innerHTML = '<span class="dot dot-orange"></span> Issue';
+        }
+
+        checkedEl.textContent = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+      } catch (e) {
+        document.getElementById('server-status').innerHTML = '<span class="dot" style="background:red"></span> Offline';
+      }
+    }
+    checkStatus();
+    setInterval(checkStatus, 30000);
+  </script>
 </body>
 </html>

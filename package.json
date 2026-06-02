@@ -1,12 +1,17 @@
 {
   "name": "qr-integration",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Turn Offroad install-instruction QR code service",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "axios": "^1.7.9",
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.19.2",
+    "qrcode": "^1.5.4"
   }
 }

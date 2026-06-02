@@ -17,5 +17,11 @@ logs/
 .idea/
 *.swp
 
+# Database
+*.db
+
+# CSV exports
+*.csv
+
 # Claude Code
 .claude/
